@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-import { count } from './utils.js'; // start with dot to indicate that it's a relative path
-import whatever from './utils.js';
+// import { count } from './utils/utils1.js'; // start with dot to indicate that it's a relative path
+import *  as utils from './utils/index.js';
 import fs from 'fs'; // fs is a built-in module // no specify path because it's a built-in module
 
 // Equivalent with CommonJS : require
@@ -9,8 +9,9 @@ import fs from 'fs'; // fs is a built-in module // no specify path because it's 
 // const whatever = require('./utils.js');
 // const fs = require('fs');
 
-console.log(count(1));
-console.log(whatever);
+console.log(utils.count(1));
+console.log(utils.whatever);
+utils.other();
 
 const note = process.argv[2];
 const newNote = {
