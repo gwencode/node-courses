@@ -14,6 +14,7 @@
   "author": "Gwendal Le Bris",
   "license": "ISC",
   "dependencies": {
-    "capitalize": "^2.0.4"
+    "capitalize": "^2.0.4",
+    "yargs": "^17.7.2"
   }
 }
