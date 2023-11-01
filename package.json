@@ -12,5 +12,8 @@
   },
   "keywords": [],
   "author": "Gwendal Le Bris",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "capitalize": "^2.0.4"
+  }
 }
