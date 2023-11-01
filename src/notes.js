@@ -31,10 +31,12 @@ export const findNotes = async (filter) => {
 export const removeNote = async (id) => {
   const { notes } = await getDB();
   const match = notes.find(note => note.id === id);
+  console.log("match 1", match)
 
   if (match) {
     const newNotes = notes.filter(note => note.id !== id);
     await saveDB({ notes: newNotes });
+    console.log("match 2", match)
     return match;
   }
 };
