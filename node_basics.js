@@ -17,3 +17,16 @@ const server = http.createServer((req, res) => {
 server.listen(3000);
 
 // Node REPL (Read-Eval-Print-Loop)
+
+// Process & Environment
+// console.log(process.argv)
+// => [
+//   '/home/gwencode/.nvm/versions/node/v16.15.1/bin/node',
+//   '/home/gwencode/code/gwencode/node-courses/index.js'
+// ]
+
+// process.env
+// => an object containing the user environment variable name and value pairs
+
+// process.env.NODE_ENV = 'development'; // 'production', 'staging', 'test'
+// console.log(process.env.NODE_ENV);
