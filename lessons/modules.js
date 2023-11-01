@@ -1,5 +1,5 @@
 // import { count } from './utils/utils1.js'; // start with dot to indicate that it's a relative path
-import *  as utils from './utils/index.js';
+import *  as utils from '../utils/index.js';
 import fs from 'fs'; // fs is a built-in module // no specify path because it's a built-in module
 import capitalize from 'capitalize';
 
