@@ -1,3 +1,26 @@
 {
-  "notes": []
+  "notes": [
+    {
+      "tags": [
+        "work",
+        "serious",
+        "hard"
+      ],
+      "id": 1698853989409,
+      "content": "learn node"
+    },
+    {
+      "tags": [],
+      "id": 1698853991419,
+      "content": "learn react"
+    },
+    {
+      "tags": [
+        "work",
+        "serious"
+      ],
+      "id": 1698854000153,
+      "content": "clean my room"
+    }
+  ]
 }

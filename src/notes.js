@@ -1,4 +1,4 @@
-import { insertDB, saveDB, getDB } from "./db";
+import { insertDB, saveDB, getDB } from "./db.js";
 
 // Create a new note
 
@@ -21,9 +21,9 @@ export const getAllNotes = async () => {
 
 // Find notes by text
 
-export const findNote = async (filter) => {
+export const findNotes = async (filter) => {
   const { notes } = await getDB();
-  return notes.filter(note => note.content.toLowercase().includes(filter.toLowercase()));
+  return notes.filter(note => note.content.toLowerCase().includes(filter.toLowerCase()));
 };
 
 // Delete note by id
@@ -32,9 +32,7 @@ export const removeNote = async (id) => {
   const { notes } = await getDB();
   const match = notes.find(note => note.id === id);
 
-  if (!match) {
-    throw new Error(`Note with id ${id} not found`);
-  } else {
+  if (match) {
     const newNotes = notes.filter(note => note.id !== id);
     await saveDB({ notes: newNotes });
     return match;
