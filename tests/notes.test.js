@@ -58,3 +58,28 @@ test('removeNote does nothing if id is not found', async () => {
   const result = await removeNote(idToRemove);
   expect(result).toBeUndefined();
 });
+
+test('removeNote removes the correct note if id is found', async () => {
+  const db = {
+    notes: [
+      { id: 1, content: 'note 1' },
+      { id: 2, content: 'note 2' },
+      { id: 3, content: 'note 3' },
+    ]
+  }
+  getDB.mockResolvedValue(db);
+
+  const idToRemove = 3;
+  const dbFiltered = {
+    notes: [
+      { id: 1, content: 'note 1' },
+      { id: 2, content: 'note 2' },
+    ]
+  }
+  saveDB.mockResolvedValue(dbFiltered);
+
+  const noteRemoved = { id: 3, content: 'note 3' };
+
+  const result = await removeNote(idToRemove);
+  expect(result).toEqual(noteRemoved);
+});
