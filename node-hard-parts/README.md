@@ -32,16 +32,16 @@ For this exercise, do not use Express or any other Node framework. Run your serv
 node server.js
 ````
 
-or `npm start`  
+or `npm start`
 
 Then visit `http://localhost:3000/`. To exit the server, press `ctrl+C`.
- **Note: Whenever you make changes to your server, you will need to restart your server by exiting your server then opening it again.** 
- 
+ **Note: Whenever you make changes to your server, you will need to restart your server by exiting your server then opening it again.**
+
 (optional) Alternatively, Nodemon is a utility that will automatically restart your server whenever you save changes to a file. Install nodemon by running ```npm install --save-dev nodemon``` and then run your server using the following command: ```nodemon server.js```. Servers running with nodemon do not need to be restarted when changes are made to the source code.
 
-3. Now we are going to investigate the Node auto-inserted object into the callback function. It represents the request from the user. 
+3. Now we are going to investigate the Node auto-inserted object into the callback function. It represents the request from the user.
 
-Write logic in the conditional to send the `index.html` page on a GET request to the url `/` by introspecting the request object. Look up the `fs.readFileSync` function. (Note that in future sections we will be using the asynchronous and non-blocking `fs.readFile` rather than the synchronous and blocking `fs.readFileSync`.) 
+Write logic in the conditional to send the `index.html` page on a GET request to the url `/` by introspecting the request object. Look up the `fs.readFileSync` function. (Note that in future sections we will be using the asynchronous and non-blocking `fs.readFile` rather than the synchronous and blocking `fs.readFileSync`.)
 
 5. When you successfully serve the index.html page, have your server respond to a POST request to the url `/sayHi` with the text `hi back to you!`. (Notice how we've set up the POST request functionality for you in index.html: what happens when we click the button "Say Hi"? Check the browser console.)
 
@@ -94,6 +94,6 @@ The acronym `CRUD` (Create, Read, Update, Delete) refers to the four major funct
    - [ ] Create a writable stream exporting to `on-joy-and-sorrow-fixed.txt`
    - [ ] Pipe the readable stream to the writable stream
 3. [Transform streams](https://nodejs.org/api/stream.html#stream_duplex_and_transform_streams) implement a readable and writable interface for modifying input from readable streams
-   - [ ] Create a transform stream to modify incoming data, replacing ':)' with 'joy' and ':(' with 'sorrow'.  
+   - [ ] Create a transform stream to modify incoming data, replacing ':)' with 'joy' and ':(' with 'sorrow'.
    **NOTE**: The [through2](https://www.npmjs.com/package/through2) library is a useful abstraction for this (it's already been imported for you)
    - [ ] Pipe the readable stream to the transform stream you just created, and then pipe the result to the writable stream
