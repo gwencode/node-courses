@@ -21,12 +21,13 @@ function doOnRequest(request, response){
   else if (request.method === 'POST' && request.url === '/greeting') {
     // accumulate the request body in a series of chunks
     // code here...
-
   }
   else {
     // Handle 404 error: page not found
     // code here...
-
+    response.statusCode = 404;
+    response.statusMessage = "Error: Not Found.";
+    response.end("Error 404");
   }
 }
 
