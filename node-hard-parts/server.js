@@ -15,6 +15,7 @@ function doOnRequest(request, response){
   }
   else if (request.method === 'POST' && request.url === '/sayHi') {
     // code here...
+    fs.appendFileSync("hi_log.txt", "Somebody said hi.\n");
     response.end("hi back to you!");
   }
   else if (request.method === 'POST' && request.url === '/greeting') {
