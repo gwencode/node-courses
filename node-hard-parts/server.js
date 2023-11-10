@@ -29,9 +29,13 @@ function doOnRequest(request, response){
   }
 }
 
-const server = http.createServer(doOnRequest)
+function doOnError(infoOnError) {
+  console.error(infoOnError);
+}
+
+const server = http.createServer()
 
 server.listen(3000);
 
-// server.on('request', doOnRequest)
-// server.on('clientError', doOnError)
+server.on('request', doOnRequest)
+server.on('clientError', doOnError)
