@@ -4,12 +4,14 @@ const fs = require('fs');
 function doOnRequest(request, response){
   // Send back a message saying "Welcome to Twitter"
   // code here...
-  response.end("Welcome to Twitter")
+  // response.end("Welcome to Twitter")
   if (request.method === 'GET' && request.url === '/') {
     // read the index.html file and send it back to the client
     // code here...
-    fs.createReadStream()
-
+    // fs.createReadStream()
+    const page = fs.readFileSync("./index.html", "utf8");
+    response.writeHead(200, { 'Content-Type': 'text/html' });
+    response.end(page);
   }
   else if (request.method === 'POST' && request.url === '/sayHi') {
     // code here...
@@ -30,3 +32,6 @@ function doOnRequest(request, response){
 const server = http.createServer(doOnRequest)
 
 server.listen(3000);
+
+// server.on('request', doOnRequest)
+// server.on('clientError', doOnError)
