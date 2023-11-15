@@ -1,23 +1,24 @@
-# Explication commande ' cat '
+# Commande ' cat '
 
 La commande cat dans un terminal est utilisée pour concaténer et afficher le contenu des fichiers. Le nom "cat" est dérivé de "concatenate". Elle est généralement utilisée pour afficher le contenu d'un fichier texte directement dans le terminal. Voici un exemple simple d'utilisation de la commande cat :
 ```
 cat nom_du_fichier
 ```
+Cela affiche le contenu du fichier spécifié sur la sortie standard du terminal.
 
-Cela affiche le contenu du fichier spécifié sur la sortie standard du terminal. Si vous avez plusieurs fichiers que vous souhaitez concaténer, vous pouvez les spécifier comme arguments supplémentaires :
-
+Si vous avez plusieurs fichiers que vous souhaitez concaténer, vous pouvez les spécifier comme arguments supplémentaires :
+```
 cat fichier1 fichier2 fichier3
-
+```
 Cela affichera le contenu de fichier1, suivi de celui de fichier2, puis de celui de fichier3.
 
 Notez que la commande cat peut également être utilisée pour créer de nouveaux fichiers en combinant le contenu de fichiers existants et en redirigeant la sortie vers un nouveau fichier. Par exemple :
-
+```
 cat fichier1 fichier2 > nouveau_fichier
-
+```
 Cela crée un nouveau fichier appelé nouveau_fichier contenant le contenu de fichier1 suivi de celui de fichier2.
 
-# Explication du pipe ' | '
+# Commande pipe ' | '
 
 La commande ```cat nom_du_fichier |``` est une partie d'une commande plus complexe qui utilise un tube (pipe en anglais, représenté par le caractère |). Un tube permet de rediriger la sortie (stdout) de la première commande vers l'entrée (stdin) de la seconde commande. Dans ce cas, la sortie de la commande cat nom_du_fichier est redirigée vers la prochaine commande qui serait spécifiée après le tube (|).
 
@@ -35,7 +36,7 @@ Il existe plusieurs types de streams dans Node.js, mais ils peuvent être géné
 
 Voici un aperçu de chacun de ces types de streams :
 
-# Readable Streams
+## Readable Streams
 
  Ils représentent une source de données à partir de laquelle vous pouvez lire des informations. Par exemple, la lecture d'un fichier, la réception de données réseau, ou la génération de données à la volée peuvent être des opérations liées à des streams en lecture.
 
@@ -50,7 +51,7 @@ readableStream.on('data', (chunk) => {
 });
 ```
 
-# Writable Streams
+## Writable Streams
 
 Ils représentent une destination pour écrire des données. Par exemple, l'écriture dans un fichier, l'envoi de données sur le réseau, ou l'enregistrement de données peuvent être des opérations liées à des streams en écriture.
 
