@@ -14,6 +14,12 @@ const args = require("minimist")(process.argv.slice(2), {
 
 // console.log(args)
 
+const BASE_PATH = path.resolve(
+  process.env.BASE_PATH || __dirname
+)
+// Command in the terminal :
+// BASE_PATH=files/ ./ex1.js --file=hello.txt
+
 if (args.help) {
   printHelp();
 } else if (args.in | args._.includes("-")) {
@@ -23,7 +29,7 @@ if (args.help) {
   getStdin().then(processFile).catch(error);
 
 } else if (args.file) {
-  fs.readFile(path.resolve(args.file), (err, contents) => {
+  fs.readFile(path.join(BASE_PATH, args.file), (err, contents) => {
     if (err) {
       error(err.toString());
     } else {

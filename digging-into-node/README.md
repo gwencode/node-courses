@@ -1,11 +1,4 @@
-# Digging Into Node
-
-Kyle Simpson
-@getify
-
-getify@gmail.com
-
-# EXPLICATION COMMANDE CAT :
+# Explication commande ' cat '
 
 La commande cat dans un terminal est utilisée pour concaténer et afficher le contenu des fichiers. Le nom "cat" est dérivé de "concatenate". Elle est généralement utilisée pour afficher le contenu d'un fichier texte directement dans le terminal. Voici un exemple simple d'utilisation de la commande cat :
 
@@ -23,7 +16,7 @@ cat fichier1 fichier2 > nouveau_fichier
 
 Cela crée un nouveau fichier appelé nouveau_fichier contenant le contenu de fichier1 suivi de celui de fichier2.
 
-# EXPLICATION PIPE | :
+# Explication du pipe ' | '
 
 La commande
 
