@@ -2,11 +2,13 @@
 
 "use strict";
 
+const util = require("util")
 const path = require("path")
 const fs = require("fs");
+const getStdin = require("get-stdin")
 
 const args = require("minimist")(process.argv.slice(2), {
-  boolean: ["help"],
+  boolean: ["help", "in"],
   string: ["file"]
 })
 
@@ -14,8 +16,16 @@ const args = require("minimist")(process.argv.slice(2), {
 
 if (args.help) {
   printHelp();
+} else if (args.in) {
+  getStdin().then(processFile).catch(error);
 } else if (args.file) {
-  processFile(path.resolve(args.file))
+  fs.readFile(path.resolve(args.file), (err, contents) => {
+    if (err) {
+      error(err.toString());
+    } else {
+      processFile(contents.toString())
+    }
+  })
 } else {
   error("Incorrect usage.", true);
 }
@@ -33,15 +43,9 @@ function processFile(filepath) {
 }
 
 // Asynchronous fs.readFile, second argument = callback
-function processFile(filepath) {
-  fs.readFile(filepath, (err, contents) => {
-    if (err) {
-      error(err.toString());
-    } else {
-      contents = contents.toString().toUpperCase();
-      process.stdout.write(contents);
-    }
-  });
+function processFile(contents) {
+    contents = contents.toUpperCase();
+    process.stdout.write(contents);
 }
 
 function error(msg, includeHelp = false) {
