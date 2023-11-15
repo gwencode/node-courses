@@ -2,15 +2,20 @@
 
 "use strict";
 
+const path = require("path")
+const fs = require("fs");
+
 const args = require("minimist")(process.argv.slice(2), {
   boolean: ["help"],
   string: ["file"]
 })
 
+// console.log(args)
+
 if (args.help) {
   printHelp();
 } else if (args.file) {
-  console.log(args.file);
+  processFile(path.resolve(args.file))
 } else {
   error("Incorrect usage.", true);
 }
@@ -24,6 +29,15 @@ function error(msg, includeHelp = false) {
 }
 
 // ********************
+
+function processFile(filepath) {
+  // const contents = fs.readFileSync(filepath);
+  // console.log(contents); // -> print the buffer
+  // const contents = fs.readFileSync(filepath);
+  // process.stdout.write(contents); // -> print the string
+  const contents = fs.readFileSync(filepath, "utf8");
+  console.log(contents); // -> print the string
+}
 
 function printHelp() {
 	console.log("ex1 usage:");
