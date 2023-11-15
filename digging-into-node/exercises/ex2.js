@@ -2,9 +2,10 @@
 
 "use strict";
 
-const util = require("util")
-const path = require("path")
+const util = require("util");
+const path = require("path");
 const fs = require("fs");
+const Transform = require("stream").Transform
 // const getStdin = require("get-stdin")
 
 const args = require("minimist")(process.argv.slice(2), {
@@ -39,7 +40,15 @@ if (args.help) {
 
 // Asynchronous fs.readFile, second argument = callback
 function processFile(inStream) {
-  const outStream = inStream;
+  let outStream = inStream;
+  const upperStream = new Transform({
+    transform(chunck, enc, cb) {
+      this.push(chunck.toString().toUpperCase());
+      cb();
+      // setTimeout(cb, 500) -> Replace line above to see every chunck each 500ms
+    }
+  });
+  outStream = outStream.pipe(upperStream)
 
   const targetStream = process.stdout
   outStream.pipe(targetStream)
