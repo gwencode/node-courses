@@ -16,8 +16,12 @@ const args = require("minimist")(process.argv.slice(2), {
 
 if (args.help) {
   printHelp();
-} else if (args.in) {
+} else if (args.in | args._.includes("-")) {
+  // Command in the terminal to activate stdin:
+  // cat ex1.js | ./ex1.js --in
+  // -> Explication dans le ReadMe
   getStdin().then(processFile).catch(error);
+
 } else if (args.file) {
   fs.readFile(path.resolve(args.file), (err, contents) => {
     if (err) {
