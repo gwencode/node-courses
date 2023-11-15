@@ -43,19 +43,19 @@ if (args.help) {
 // ********************
 
 // Synchronous fs.readFile
-function processFile(filepath) {
-  // const contents = fs.readFileSync(filepath);
-  // console.log(contents); // -> print the buffer
-  // const contents = fs.readFileSync(filepath);
-  // process.stdout.write(contents); // -> print the string
-  const contents = fs.readFileSync(filepath, "utf8");
-  console.log(contents); // -> print the string
-}
+// function processFile(filepath) {
+//   // const contents = fs.readFileSync(filepath);
+//   // console.log(contents); // -> print the buffer
+//   // const contents = fs.readFileSync(filepath);
+//   // process.stdout.write(contents); // -> print the string
+//   const contents = fs.readFileSync(filepath, "utf8");
+//   console.log(contents); // -> print the string
+// }
 
 // Asynchronous fs.readFile, second argument = callback
 function processFile(contents) {
-    contents = contents.toUpperCase();
-    process.stdout.write(contents);
+  contents = contents.toUpperCase();
+  process.stdout.write(contents);
 }
 
 function error(msg, includeHelp = false) {

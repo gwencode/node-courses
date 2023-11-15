@@ -5,7 +5,7 @@
 const util = require("util")
 const path = require("path")
 const fs = require("fs");
-const getStdin = require("get-stdin")
+// const getStdin = require("get-stdin")
 
 const args = require("minimist")(process.argv.slice(2), {
   boolean: ["help", "in"],
@@ -17,25 +17,14 @@ const args = require("minimist")(process.argv.slice(2), {
 const BASE_PATH = path.resolve(
   process.env.BASE_PATH || __dirname
 )
-// Command in the terminal :
-// BASE_PATH=files/ ./ex1.js --file=hello.txt
 
 if (args.help) {
   printHelp();
 } else if (args.in | args._.includes("-")) {
-  // Command in the terminal to activate stdin:
-  // cat ex1.js | ./ex1.js --in
-  // -> Explication dans le ReadMe
-  getStdin().then(processFile).catch(error);
-
+  processFile(process.stdin)
 } else if (args.file) {
-  fs.readFile(path.join(BASE_PATH, args.file), (err, contents) => {
-    if (err) {
-      error(err.toString());
-    } else {
-      processFile(contents.toString())
-    }
-  })
+  let stream = fs.createReadStream(path.join(BASE_PATH, args.file));
+  processFile(stream);
 } else {
   error("Incorrect usage.", true);
 }
@@ -43,19 +32,17 @@ if (args.help) {
 // ********************
 
 // Synchronous fs.readFile
-function processFile(filepath) {
-  // const contents = fs.readFileSync(filepath);
-  // console.log(contents); // -> print the buffer
-  // const contents = fs.readFileSync(filepath);
-  // process.stdout.write(contents); // -> print the string
-  const contents = fs.readFileSync(filepath, "utf8");
-  console.log(contents); // -> print the string
-}
+// function processFile(filepath) {
+//   const contents = fs.readFileSync(filepath, "utf8");
+//   console.log(contents);
+// }
 
 // Asynchronous fs.readFile, second argument = callback
-function processFile(contents) {
-    contents = contents.toUpperCase();
-    process.stdout.write(contents);
+function processFile(inStream) {
+  const outStream = inStream;
+
+  const targetStream = process.stdout
+  outStream.pipe(targetStream)
 }
 
 function error(msg, includeHelp = false) {
@@ -76,10 +63,3 @@ function printHelp() {
 	console.log("");
 	console.log("");
 }
-
-  // // process.stdout.write("Hello World");
-  // // process.stdout.write("Hello World\n");
-
-  // console.log("Hello world");
-
-  // console.error("Oops");
