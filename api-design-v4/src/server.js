@@ -1,6 +1,7 @@
-import express from "express";
-import path from "path";
+const express = require("express");
 const app = express();
+const path = require("path");
+
 app.use(express.static("public"));
 
 app.get("/", (req, res) => {
@@ -12,4 +13,4 @@ app.get("/api", (req, res) => {
   res.json({ message: "Hello World from express" });
 });
 
-export default app;
+module.exports = app;
