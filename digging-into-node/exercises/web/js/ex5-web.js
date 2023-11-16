@@ -35,9 +35,16 @@
 	}
 
 	async function getRecords() {
-		recordsList.innerHTML = "...";
-
-		// TODO
+		let response = await fetch("/get-records")
+    // Vérifiez si la réponse du serveur est réussie (statut 200 OK)
+    if (!response.ok) {
+      throw new Error('La requête a échoué avec le statut ' + response.status);
+    }
+    // Convertissez la réponse en JSON et retournez-la
+    let records = await response.json();
+    if (records && records.length > 0) {
+      renderRecords(records);
+    }
 	}
 
 })();
