@@ -10,11 +10,11 @@ const zlib = require("zlib");
 // const getStdin = require("get-stdin")
 
 const args = require("minimist")(process.argv.slice(2), {
-  boolean: ["help", "in", "out", "compress"],
+  boolean: ["help", "in", "out", "compress", "uncompress"],
   string: ["file"]
 })
 
-// console.log(args)
+console.log(args)
 
 const BASE_PATH = path.resolve(
   process.env.BASE_PATH || __dirname
@@ -44,6 +44,12 @@ if (args.help) {
 // Asynchronous fs.readFile, second argument = callback
 function processFile(inStream) {
   let outStream = inStream;
+
+if (args.uncompress) {
+  let gunzipStream = zlib.createGunzip();
+  outStream = outStream.pipe(gunzipStream);
+}
+
   const upperStream = new Transform({
     transform(chunck, enc, cb) {
       this.push(chunck.toString().toUpperCase());
@@ -78,13 +84,14 @@ function error(msg, includeHelp = false) {
 }
 
 function printHelp() {
-	console.log("ex1 usage:");
-	console.log("  ex1 --file={FILENAME}:");
+	console.log("ex2 usage:");
+	console.log("  ex2.js --file={FILENAME}:");
 	console.log("");
 	console.log("--help                      print this help");
 	console.log("--file={FILENAME}           read file from {FILENAME}");
 	console.log("-, --in                     read file from stdin");
 	console.log("--out                       print to stdout");
 	console.log("--compress                  gzip the output");
+	console.log("--uncompress                un-gzip the output");
 	console.log("");
 }
