@@ -49,7 +49,7 @@ async function main() {
 	};
 
 	var initSQL = fs.readFileSync(DB_SQL_PATH,"utf-8");
-	// TODO: initialize the DB structure
+	await SQL3.exec(initSQL);
 
 
 	var other = args.other;
@@ -59,7 +59,7 @@ async function main() {
 
 	// TODO: insert values and print all records
 
-	error("Oops!");
+	// error("Oops!");
 }
 
 function error(err) {
