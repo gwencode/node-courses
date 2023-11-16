@@ -7,6 +7,7 @@ const path = require("path");
 const fs = require("fs");
 const Transform = require("stream").Transform;
 const zlib = require("zlib");
+const CAF = require("caf")
 // const getStdin = require("get-stdin")
 
 const args = require("minimist")(process.argv.slice(2), {
@@ -14,7 +15,9 @@ const args = require("minimist")(process.argv.slice(2), {
   string: ["file"]
 })
 
-console.log(args)
+// console.log(args)
+
+processFile = CAF(processFile);
 
 function streamComplete(stream) {
   return new Promise((res) => {
@@ -31,10 +34,15 @@ let OUTFILE = path.join(BASE_PATH, "out.txt")
 if (args.help) {
   printHelp();
 } else if (args.in | args._.includes("-")) {
-  processFile(process.stdin)
+  let tooLong = CAF.timeout(13, "\nTook too long!");
+  processFile(tooLong, process.stdin)
+  .catch(error);
 } else if (args.file) {
   let stream = fs.createReadStream(path.join(BASE_PATH, args.file));
-  processFile(stream)
+
+  let tooLong = CAF.timeout(13, "\nTook too long!");
+
+  processFile(tooLong, stream)
   .then(() => console.log("Complete!"))
   .catch(error);
 } else {
@@ -50,7 +58,7 @@ if (args.help) {
 // }
 
 // Asynchronous fs.readFile, second argument = callback
-async function processFile(inStream) {
+function *processFile(signal, inStream) {
   let outStream = inStream;
 
 if (args.uncompress) {
@@ -84,7 +92,12 @@ if (args.uncompress) {
 
   outStream.pipe(targetStream)
 
-  await streamComplete(outStream);
+  signal.pr.catch(() => {
+    outStream.unpipe(targetStream);
+    outStream.destroy();
+  })
+
+  yield streamComplete(outStream);
 }
 
 function error(msg, includeHelp = false) {
