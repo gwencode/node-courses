@@ -57,16 +57,20 @@ async function main() {
 
 	// ***********
 
-	var otherId = await insertOrLookupOther(other);
+	var otherID = await insertOrLookupOther(other);
   if (otherID) {
     // TO DO
     let result = insertSomething(otherID, something);
     if (result) {
+      var records = await getAllRecords();
+      if (records && records.length > 0) {
+        console.table(records)
+      }
       return;
     }
   }
 
-	// error("Oops!");
+	error("Oops!");
 }
 
 async function insertOrLookupOther(other) {
@@ -97,6 +101,23 @@ async function insertOrLookupOther(other) {
       return result.lastID
     }
   }
+}
+
+async function insertSomething(otherID, something) {
+  var result = await SQL3.run(
+    `
+      INSERT INTO
+        Something(otherID, data)
+      VALUES
+        (?,?)
+    `,
+    otherID, something
+  );
+
+  if (result && result.changes > 0) {
+    return true
+  }
+  return false;
 }
 
 function error(err) {
