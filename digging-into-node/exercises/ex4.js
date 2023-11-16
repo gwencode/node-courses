@@ -120,6 +120,24 @@ async function insertSomething(otherID, something) {
   return false;
 }
 
+async function getAllRecords() {
+  var results = await SQL3.all(
+    `
+      SELECT
+        Other.data AS 'other',
+        Something.data AS 'something'
+      FROM
+        Something JOIN Other
+        ON (Something.otherID = Other.id)
+      ORDER BY
+        Something.id DESC, Something.data ASC
+    `
+  );
+  if (results && results.length > 0) {
+    return results
+  }
+}
+
 function error(err) {
 	if (err) {
 		console.error(err.toString());
