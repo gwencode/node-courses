@@ -21,10 +21,10 @@ main().catch(console.error);
 
 async function main() {
 	console.log(`Load testing http://localhost:${HTTP_PORT}...`);
-  var x = 0;
+  // var x = 0; // For test debugging
 
   while(true) {
-    x++;
+    // x++;
     process.stdout.write(`Sending ${MAX_CHILDREN} requests...`)
     let children = [];
 
@@ -41,9 +41,10 @@ async function main() {
       });
     });
 
-    if (x > 5) {
-      foo()
-    }
+    // For test debugging
+    // if (x > 5) {
+    //   foo()
+    // }
 
     resps = await Promise.all(resps);
 
