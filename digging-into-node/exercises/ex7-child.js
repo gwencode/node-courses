@@ -14,5 +14,8 @@ main().catch(() => 1);
 // ************************************
 
 async function main() {
-	// TODO
+	let x = 0;
+  for (let i = 0; i<1000000000; i++) {
+    x = i + 1;
+  }
 }
