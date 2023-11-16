@@ -75,6 +75,15 @@ function main() {
 }
 
 async function handleRequest(req, res) {
+  if (req.url === "/get-records") {
+    let records = await getAllRecords();
+    res.writeHead(
+      200,
+      {"Content-Type": "application/json",
+      "Cache-Control": "no-cache"}
+    );
+    res.end(JSON.stringify(records));
+  }
   fileServer.serve(req, res)
 }
 
