@@ -5,11 +5,12 @@
 const util = require("util");
 const path = require("path");
 const fs = require("fs");
-const Transform = require("stream").Transform
+const Transform = require("stream").Transform;
+const zlib = require("zlib");
 // const getStdin = require("get-stdin")
 
 const args = require("minimist")(process.argv.slice(2), {
-  boolean: ["help", "in", "out"],
+  boolean: ["help", "in", "out", "compress"],
   string: ["file"]
 })
 
@@ -19,7 +20,7 @@ const BASE_PATH = path.resolve(
   process.env.BASE_PATH || __dirname
 )
 
-const OUTFILE = path.join(BASE_PATH, "out.txt")
+let OUTFILE = path.join(BASE_PATH, "out.txt")
 
 if (args.help) {
   printHelp();
@@ -50,7 +51,13 @@ function processFile(inStream) {
       // setTimeout(cb, 500) -> Replace line above to see every chunck each 500ms
     }
   });
-  outStream = outStream.pipe(upperStream)
+  outStream = outStream.pipe(upperStream);
+
+  if (args.compress) {
+    let gzipStream = zlib.createGzip()
+    outStream = outStream.pipe(gzipStream);
+    OUTFILE = `${OUTFILE}.gz`
+  }
 
   let targetStream
 
@@ -78,5 +85,6 @@ function printHelp() {
 	console.log("--file={FILENAME}           read file from {FILENAME}");
 	console.log("-, --in                     read file from stdin");
 	console.log("--out                       print to stdout");
+	console.log("--compress                  gzip the output");
 	console.log("");
 }
