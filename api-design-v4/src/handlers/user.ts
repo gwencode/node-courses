@@ -33,4 +33,7 @@ export const signinUser = async (req, res) => {
     res.json({ message: "not authorized" });
     return;
   }
+
+  const token = createJWT(user);
+  res.json({ token });
 };
