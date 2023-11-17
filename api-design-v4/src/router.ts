@@ -3,6 +3,7 @@ import { Router } from "express";
 const router = Router();
 
 router.get("/product", (req, res) => {
+  // res.json({ message: req.shhhh_secret }); // Custom Middleware
   res.json({ message: "Hello world" });
 });
 router.get("/product/:id", () => {});
