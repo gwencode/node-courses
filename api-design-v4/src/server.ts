@@ -1,6 +1,6 @@
-const express = require("express");
+import express from "express";
 const app = express();
-const path = require("path");
+import path from "path";
 
 app.use(express.static("public"));
 
@@ -13,4 +13,4 @@ app.get("/api", (req, res) => {
   res.json({ message: "Hello World from express" });
 });
 
-module.exports = app;
+export default app;
