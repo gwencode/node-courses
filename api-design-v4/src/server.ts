@@ -1,7 +1,11 @@
 import express from "express";
-const app = express();
 import path from "path";
 import router from "./router";
+import morgan from "morgan";
+
+const app = express();
+
+app.use(morgan("dev"));
 
 app.use(express.static("public"));
 
