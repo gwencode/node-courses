@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { body, validationResult } from "express-validator";
+import { createProduct } from "./handlers/product";
 
 const router = Router();
 
@@ -8,6 +9,7 @@ router.get("/product", (req, res) => {
   res.json({ message: "Hello world" });
 });
 router.get("/product/:id", () => {});
+
 router.put("/product/:id", body("name").isString(), (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -15,7 +17,14 @@ router.put("/product/:id", body("name").isString(), (req, res) => {
     return;
   }
 });
-router.post("/product", () => {});
+
+router.post(
+  "/product",
+  body("name").isString(),
+  body("price").isNumeric(),
+  createProduct
+);
+
 router.delete("/product/:id", () => {});
 
 router.get("/update", () => {});
