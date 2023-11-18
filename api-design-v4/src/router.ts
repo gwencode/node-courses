@@ -1,6 +1,11 @@
 import { Router } from "express";
 import { body, validationResult } from "express-validator";
-import { createProduct } from "./handlers/product";
+import {
+  createProduct,
+  updateProduct,
+  deleteProduct,
+} from "./handlers/product";
+import { validationError } from "./handlers/validationError";
 
 const router = Router();
 
@@ -10,22 +15,22 @@ router.get("/product", (req, res) => {
 });
 router.get("/product/:id", () => {});
 
-router.put("/product/:id", body("name").isString(), (req, res) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    res.status(400).json({ errors: errors.array() });
-    return;
-  }
-});
-
+router.put(
+  "/product/:id",
+  body("name").isString(),
+  body("price").isNumeric(),
+  validationError,
+  updateProduct
+);
 router.post(
   "/product",
   body("name").isString(),
   body("price").isNumeric(),
+  validationError,
   createProduct
 );
 
-router.delete("/product/:id", () => {});
+router.delete("/product/:id", deleteProduct);
 
 router.get("/update", () => {});
 router.get("/update/:id", () => {});
