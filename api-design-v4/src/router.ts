@@ -1,19 +1,34 @@
 import { Router } from "express";
 import { body, validationResult } from "express-validator";
 import {
+  allProducts,
   createProduct,
-  updateProduct,
   deleteProduct,
+  findProduct,
+  updateProduct,
 } from "./handlers/product";
+import {
+  allUpdates,
+  createUpdate,
+  deleteUpdate,
+  findUpdate,
+  updateUpdate,
+} from "./handlers/update";
+import {
+  allUpdatePoints,
+  createUpdatePoint,
+  deleteUpdatePoint,
+  findUpdatePoint,
+  updateUpdatePoint,
+} from "./handlers/update_point";
 import { validationError } from "./handlers/validationError";
 
 const router = Router();
 
-router.get("/product", (req, res) => {
-  // res.json({ message: req.shhhh_secret }); // Custom Middleware
-  res.json({ message: "Hello world" });
-});
-router.get("/product/:id", () => {});
+// Product
+
+router.get("/product", allProducts);
+router.get("/product/:id", findProduct);
 
 router.put(
   "/product/:id",
@@ -32,16 +47,50 @@ router.post(
 
 router.delete("/product/:id", deleteProduct);
 
-router.get("/update", () => {});
-router.get("/update/:id", () => {});
-router.put("/update/:id", () => {});
-router.post("/update", () => {});
-router.delete("/update/:id", () => {});
+// Update
 
-router.get("/updatepoint", () => {});
-router.get("/updatepoint/:id", () => {});
-router.put("/updatepoint/:id", () => {});
-router.post("/updatepoint", () => {});
-router.delete("/updatepoint/:id", () => {});
+router.get("/update", allUpdates);
+router.get("/update/:id", findUpdate);
+
+router.post(
+  "/update",
+  body("title").isString(),
+  body("body").isString(),
+  body("productId").isString(),
+  validationError,
+  createUpdate
+);
+
+router.put(
+  "/update/:id",
+  body("name").isString(),
+  body("price").isNumeric(),
+  validationError,
+  updateUpdate
+);
+router.delete("/update/:id", deleteUpdate);
+
+// UpdatePoint
+
+router.get("/updatepoint", allUpdatePoints);
+router.get("/updatepoint/:id", findUpdatePoint);
+
+router.post(
+  "/updatepoint",
+  body("title").isString(),
+  body("body").isString(),
+  body("productId").isString(),
+  validationError,
+  createUpdatePoint
+);
+
+router.put(
+  "/updatepoint/:id",
+  body("name").isString(),
+  body("price").isNumeric(),
+  validationError,
+  updateUpdatePoint
+);
+router.delete("/updatepoint/:id", deleteUpdatePoint);
 
 export default router;

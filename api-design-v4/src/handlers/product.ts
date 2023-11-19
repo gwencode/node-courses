@@ -1,5 +1,17 @@
 import prisma from "../db";
 
+export const allProducts = async (req, res) => {
+  const products = await prisma.product.findMany();
+  res.json(products);
+};
+
+export const findProduct = async (req, res) => {
+  const product = await prisma.product.findUnique({
+    where: { id: req.params.id },
+  });
+  res.json(product);
+};
+
 export const createProduct = async (req, res) => {
   const product = await prisma.product.create({
     data: {
