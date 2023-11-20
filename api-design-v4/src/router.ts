@@ -57,14 +57,19 @@ router.post(
   body("title").isString(),
   body("body").isString(),
   body("productId").isString(),
+  body("version").optional().isString(),
+  body("asset").optional().isString(),
   validationError,
   createUpdate
 );
 
 router.put(
   "/update/:id",
-  body("name").isString(),
-  body("price").isNumeric(),
+  body("title").optional().isString(),
+  body("body").optional().isString(),
+  body("status").optional().isString(),
+  body("version").optional().isString(),
+  body("asset").optional().isString(),
   validationError,
   updateUpdate
 );

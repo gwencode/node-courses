@@ -17,22 +17,29 @@ export const createUpdate = async (req, res) => {
     data: {
       title: req.body.title,
       body: req.body.body,
-      productId: req.product.id,
+      productId: req.body.productId,
+      version: req.body.version,
+      asset: req.body.asset,
     },
   });
   res.json(update);
 };
 
 export const updateUpdate = async (req, res) => {
-  const update = await prisma.update.update({
+  const update = await prisma.update.findUnique({
+    where: { id: req.params.id },
+  });
+  const new_update = await prisma.update.update({
     where: { id: req.params.id },
     data: {
-      title: req.body.title,
-      body: req.body.body,
-      productId: req.product.id,
+      title: req.body.title || update.title,
+      body: req.body.body || update.body,
+      status: req.body.status || update.status,
+      version: req.body.version || update.version,
+      asset: req.body.asset || update.asset,
     },
   });
-  res.json(update);
+  res.json(new_update);
 };
 
 export const deleteUpdate = async (req, res) => {
