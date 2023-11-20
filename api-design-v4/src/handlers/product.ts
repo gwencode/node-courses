@@ -34,19 +34,33 @@ export const createProduct = async (req, res) => {
 };
 
 export const updateProduct = async (req, res) => {
-  const product = await prisma.product.update({
-    where: { id: req.params.id },
+  // const product = await prisma.product.findFirst({
+  //   where: { id: req.params.id, userId: req.user.id },
+  // });
+
+  const updated = await prisma.product.update({
+    where: {
+      id_userId: {
+        id: req.params.id,
+        userId: req.user.id,
+      },
+    },
     data: {
       name: req.body.name,
       price: req.body.price,
     },
   });
-  res.json({ data: product });
+  res.json({ data: updated });
 };
 
 export const deleteProduct = async (req, res) => {
-  await prisma.product.delete({
-    where: { id: req.params.id },
+  const deleted = await prisma.product.delete({
+    where: {
+      id_userId: {
+        id: req.params.id,
+        userId: req.user.id,
+      },
+    },
   });
-  res.end("product deleted");
+  res.json({ data: deleted });
 };
