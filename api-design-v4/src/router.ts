@@ -21,7 +21,7 @@ import {
   findUpdatePoint,
   updateUpdatePoint,
 } from "./handlers/update_point";
-import { validationError } from "./handlers/validationError";
+import { validationError } from "./modules/validationError";
 
 const router = Router();
 

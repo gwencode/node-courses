@@ -13,6 +13,26 @@ export const findUpdate = async (req, res) => {
 };
 
 export const createUpdate = async (req, res) => {
+  const products = await prisma.product.findMany({
+    where: { userId: req.user.id },
+  });
+  console.log(products);
+  if (products.length === 0) {
+    res.status(400).json({ error: "You don't have any product" });
+    return;
+  } else if (products.length > 1) {
+    // Check if the user owns the product with the id provided in the request
+    const product = products.find(
+      (product) => product.userId === req.body.productId
+    );
+    if (!product) {
+      res.status(400).json({ error: "Product not found" });
+      return;
+    } else if (product.userId !== req.user.id) {
+      res.status(400).json({ error: "You don't own this product" });
+      return;
+    }
+  }
   const update = await prisma.update.create({
     data: {
       title: req.body.title,
