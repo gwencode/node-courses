@@ -34,23 +34,27 @@ export const createProduct = async (req, res) => {
 };
 
 export const updateProduct = async (req, res) => {
-  // const product = await prisma.product.findFirst({
-  //   where: { id: req.params.id, userId: req.user.id },
-  // });
-
-  const updated = await prisma.product.update({
-    where: {
-      id_userId: {
-        id: req.params.id,
-        userId: req.user.id,
-      },
-    },
-    data: {
-      name: req.body.name,
-      price: req.body.price,
-    },
+  const product = await prisma.product.findFirst({
+    where: { id: req.params.id, userId: req.user.id },
   });
-  res.json({ data: updated });
+  if (!product) {
+    res.status(404).json({ error: "Product not found" });
+    return;
+  } else {
+    const updated = await prisma.product.update({
+      where: {
+        id_userId: {
+          id: req.params.id,
+          userId: req.user.id,
+        },
+      },
+      data: {
+        name: req.body.name,
+        price: req.body.price,
+      },
+    });
+    res.json({ data: updated });
+  }
 };
 
 export const deleteProduct = async (req, res) => {

@@ -32,8 +32,8 @@ router.get("/product/:id", findProduct);
 
 router.put(
   "/product/:id",
-  body("name").isString(),
-  body("price").isNumeric(),
+  body("name").optional().isString(),
+  body("price").optional().isNumeric(),
   validationError,
   updateProduct
 );
