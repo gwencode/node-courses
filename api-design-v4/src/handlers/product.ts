@@ -48,10 +48,7 @@ export const updateProduct = async (req, res) => {
           userId: req.user.id,
         },
       },
-      data: {
-        name: req.body.name,
-        price: req.body.price,
-      },
+      data: req.body,
     });
     res.json({ data: updated });
   }

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { body, validationResult } from "express-validator";
+import { body } from "express-validator";
 import {
   allProducts,
   createProduct,
@@ -14,13 +14,13 @@ import {
   findUpdate,
   updateUpdate,
 } from "./handlers/update";
-import {
-  allUpdatePoints,
-  createUpdatePoint,
-  deleteUpdatePoint,
-  findUpdatePoint,
-  updateUpdatePoint,
-} from "./handlers/update_point";
+// import {
+//   allUpdatePoints,
+//   createUpdatePoint,
+//   deleteUpdatePoint,
+//   findUpdatePoint,
+//   updateUpdatePoint,
+// } from "./handlers/update_point";
 import { validationError } from "./modules/validationError";
 
 const router = Router();
@@ -75,27 +75,27 @@ router.put(
 );
 router.delete("/update/:id", deleteUpdate);
 
-// UpdatePoint
+// UpdatePoint -> TO DO / Optional body / Handlers
 
-router.get("/updatepoint", allUpdatePoints);
-router.get("/updatepoint/:id", findUpdatePoint);
+// router.get("/updatepoint", allUpdatePoints);
+// router.get("/updatepoint/:id", findUpdatePoint);
 
-router.post(
-  "/updatepoint",
-  body("title").isString(),
-  body("body").isString(),
-  body("productId").isString(),
-  validationError,
-  createUpdatePoint
-);
+// router.post(
+//   "/updatepoint",
+//   body("title").isString(),
+//   body("body").isString(),
+//   body("productId").isString(),
+//   validationError,
+//   createUpdatePoint
+// );
 
-router.put(
-  "/updatepoint/:id",
-  body("name").isString(),
-  body("price").isNumeric(),
-  validationError,
-  updateUpdatePoint
-);
-router.delete("/updatepoint/:id", deleteUpdatePoint);
+// router.put(
+//   "/updatepoint/:id",
+//   body("name").isString(),
+//   body("price").isNumeric(),
+//   validationError,
+//   updateUpdatePoint
+// );
+// router.delete("/updatepoint/:id", deleteUpdatePoint);
 
 export default router;

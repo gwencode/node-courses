@@ -22,20 +22,16 @@ export const createUpdate = async (req, res) => {
   const products = await prisma.product.findMany({
     where: { userId: req.user.id },
   });
-  console.log(products);
   if (products.length === 0) {
     res.status(400).json({ error: "You don't have any product" });
     return;
-  } else if (products.length > 1) {
+  } else if (products.length > 0) {
     // Check if the user owns the product with the id provided in the request
     const product = products.find(
-      (product) => product.userId === req.body.productId
+      (product) => product.id === req.body.productId
     );
     if (!product) {
       res.status(400).json({ error: "Product not found" });
-      return;
-    } else if (product.userId !== req.user.id) {
-      res.status(400).json({ error: "You don't own this product" });
       return;
     }
   }
@@ -48,29 +44,52 @@ export const createUpdate = async (req, res) => {
       asset: req.body.asset,
     },
   });
-  res.json(update);
+  res.json({ data: update });
 };
 
 export const updateUpdate = async (req, res) => {
-  const update = await prisma.update.findUnique({
-    where: { id: req.params.id },
-  });
-  const new_update = await prisma.update.update({
-    where: { id: req.params.id },
-    data: {
-      title: req.body.title || update.title,
-      body: req.body.body || update.body,
-      status: req.body.status || update.status,
-      version: req.body.version || update.version,
-      asset: req.body.asset || update.asset,
+  const product = await prisma.product.findFirst({
+    where: {
+      userId: req.user.id,
+      updates: {
+        some: {
+          id: req.params.id,
+        },
+      },
     },
   });
-  res.json(new_update);
+
+  if (!product) {
+    res.status(400).json({ error: "Update not found" });
+    return;
+  }
+
+  const update = await prisma.update.update({
+    where: { id: req.params.id },
+    data: req.body,
+  });
+  res.json({ data: update });
 };
 
 export const deleteUpdate = async (req, res) => {
-  await prisma.update.delete({
+  const product = await prisma.product.findFirst({
+    where: {
+      userId: req.user.id,
+      updates: {
+        some: {
+          id: req.params.id,
+        },
+      },
+    },
+  });
+
+  if (!product) {
+    res.status(400).json({ error: "Update not found" });
+    return;
+  }
+
+  const deleted = await prisma.update.delete({
     where: { id: req.params.id },
   });
-  res.end("update deleted");
+  res.json({ data: deleted });
 };
