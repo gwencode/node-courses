@@ -8,7 +8,7 @@ import {
   updateProduct,
 } from "./handlers/product";
 import {
-  allUpdates,
+  getUpdates,
   createUpdate,
   deleteUpdate,
   findUpdate,
@@ -49,7 +49,7 @@ router.delete("/product/:id", deleteProduct);
 
 // Update
 
-router.get("/update", allUpdates);
+router.get("/update", getUpdates);
 router.get("/update/:id", findUpdate);
 
 router.post(
