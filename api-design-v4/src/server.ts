@@ -19,12 +19,14 @@ app.use(express.urlencoded({ extended: true }));
 //   next();
 // });
 
-app.use(express.static("public"));
-
+// app.use(express.static("public"));
 // By default, express.static will look for an index.html file in the root directory
-// app.get("/", (req, res) => {
-//   res.sendFile(path.resolve("public/index.html"));
-// });
+
+app.get("/", (req, res) => {
+  res.status(200);
+  res.sendFile(path.resolve("public/index.html"));
+  // res.json({ message: "Hello" }); // For Integration Testing
+});
 
 app.get("/api", (req, res, next) => {
   // throw new Error("Something went wrong"); // This will be caught by the error handler
