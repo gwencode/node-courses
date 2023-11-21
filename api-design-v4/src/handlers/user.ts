@@ -17,27 +17,38 @@ export const createNewUser = async (req, res, next) => {
   }
 };
 
-export const signinUser = async (req, res) => {
-  const user = await prisma.user.findUnique({
-    where: {
-      username: req.body.username,
-    },
-  });
+class AuthError extends Error {
+  public type: string;
+  public details: string;
 
-  if (!user) {
-    res.status(401);
-    res.json({ message: "username not found" });
-    return;
+  constructor(message: string, type: string, details: string) {
+    super(message);
+    this.type = type;
+    this.details = details;
   }
+}
 
-  const isValid = await comparePassword(req.body.password, user.password);
+export const signinUser = async (req, res, next) => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        username: req.body.username,
+      },
+    });
 
-  if (!isValid) {
-    res.status(401);
-    res.json({ message: "not authorized" });
-    return;
+    if (!user) {
+      throw new AuthError("Unauthorized", "auth", "wrong username");
+    }
+
+    const isValid = await comparePassword(req.body.password, user.password);
+
+    if (!isValid) {
+      throw new AuthError("Unauthorized", "auth", "wrong password");
+    }
+
+    const token = createJWT(user);
+    res.json({ token });
+  } catch (e) {
+    next(e);
   }
-
-  const token = createJWT(user);
-  res.json({ token });
 };

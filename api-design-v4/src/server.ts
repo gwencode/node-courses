@@ -44,7 +44,7 @@ app.post("/signin", signinUser);
 // Error Handler
 app.use((err, req, res, next) => {
   if (err.type === "auth") {
-    res.status(401).json({ message: "unauthorized" });
+    res.status(401).json({ message: "unauthorized", details: err.details });
   } else if (err.type === "input") {
     res.status(400).json({ message: "invalid input" });
   } else {
