@@ -26,8 +26,12 @@ app.use(express.static("public"));
 //   res.sendFile(path.resolve("public/index.html"));
 // });
 
-app.get("/api", (req, res) => {
+app.get("/api", (req, res, next) => {
   // throw new Error("Something went wrong"); // This will be caught by the error handler
+  setTimeout(() => {
+    next(new Error("Something went wrong")); // This will be caught by the error handler
+  }, 1000);
+
   res.status(200);
   res.json({ message: "Hello World from express" });
 });
@@ -40,7 +44,7 @@ app.post("/signin", signinUser);
 // Error Handler
 app.use((err, req, res, next) => {
   console.error(err);
-  res.json({ message: "Something broke" });
+  res.json({ message: `Error: ${err.message}` });
 });
 
 export default app;
