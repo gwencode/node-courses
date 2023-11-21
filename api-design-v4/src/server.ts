@@ -21,11 +21,13 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static("public"));
 
-app.get("/", (req, res) => {
-  res.sendFile(path.resolve("public/index.html"));
-});
+// By default, express.static will look for an index.html file in the root directory
+// app.get("/", (req, res) => {
+//   res.sendFile(path.resolve("public/index.html"));
+// });
 
 app.get("/api", (req, res) => {
+  // throw new Error("Something went wrong"); // This will be caught by the error handler
   res.status(200);
   res.json({ message: "Hello World from express" });
 });
@@ -34,5 +36,11 @@ app.use("/api", protect, router);
 
 app.post("/user", createNewUser);
 app.post("/signin", signinUser);
+
+// Error Handler
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.json({ message: "Something broke" });
+});
 
 export default app;
